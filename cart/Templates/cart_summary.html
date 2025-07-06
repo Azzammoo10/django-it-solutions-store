@@ -1,0 +1,197 @@
+{% extends 'Ecom/base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- Header Section -->
+    <header class="bg-dark py-5">
+        <div class="container px-4 px-lg-5 my-5" style="height: 30px;">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">Shopping Cart</h1>
+                <p class="lead fw-normal text-white-50 mb-0">View Your Cart.....</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Cart Section -->
+    <div class="container my-5 fade-in">
+        <div class="row">
+            <div class="col-12">
+                {% if cart_products %}
+                    {% for product in cart_products %}
+                        <div class="card mb-4 shadow-sm slide-up">
+                            <div class="row g-0">
+                                <!-- Product Image -->
+                                <div class="col-md-4">
+                                    <img src="{{ product.image1.url }}" class="img-fluid rounded-start" alt="{{ product.name }}">
+                                </div>
+
+                                <!-- Product Details -->
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ product.name }}</h5>
+                                        <p class="card-text">{{ product.description|safe }}</p>
+
+                                        <!-- Price Section -->
+                                        <p class="card-text">
+                                            {% if product.is_sale %}
+                                                <span class="text-muted text-decoration-line-through">{{ product.price }} DH</span>
+                                                <strong class="price-animation">{{ product.sale_price }} DH</strong>
+                                            {% else %}
+                                                <strong class="price-animation">Price: {{ product.price }} DH</strong>
+                                            {% endif %}
+                                        </p>
+
+                                        <!-- Quantity Selection -->
+                                        <div class="row align-items-center mb-3">
+                                            <div class="col-md-4">
+                                                <label for="select{{ product.id }}" class="form-label">Quantity:</label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select class="form-select form-select-sm" id="select{{ product.id }}">
+                                                    {% for key, value in quantities.items %}
+                                                        {% if key == product.id|slugify %}
+                                                            <option selected>{{ value }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- Buttons -->
+                                        <div class="d-flex justify-content-between">
+                                            <a href="{% url 'base' %}" class="btn btn-secondary">Home</a>
+                                            <div>
+                                                <button type="button" data-index="{{ product.id }}" class="btn btn-secondary update-cart btn-animation">Update</button>
+                                                <button type="button" data-index="{{ product.id }}" class="btn btn-danger delete-product btn-animation">Remove</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <!-- Section Total Simple et Professionnelle -->
+                    <div class="card border-0 mt-4">
+                        <div class="card-body d-flex justify-content-between align-items-center p-3 bg-light rounded shadow-sm">
+                            <h4 class="fw-bold text-dark mb-0">Total:</h4>
+                            <span class="fs-4 badge bg-success p-2 rounded total-animation">{{ totals }} DH</span>
+                        </div>
+                        <a href="{% url 'checkout' %}" class="btn btn-success btn-animation">Checkout</a>
+                    </div>
+                {% else %}
+                    <!-- Empty Cart Message -->
+                    <div class="text-center">
+                        <h2>There's Nothing in Your Cart.....</h2>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- CSS Animations -->
+    <style>
+        /* Fade-in animation for cart container */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Slide-up effect for product cards */
+        .slide-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.6s forwards;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Price animation for sale price */
+        .price-animation {
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .price-animation:hover {
+            color: #dc3545; /* Highlight sale price on hover */
+            transform: scale(1.05);
+        }
+
+        /* Button animation */
+        .btn-animation {
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-animation:hover {
+            transform: scale(1.05);
+        }
+
+        /* Total price animation */
+        .total-animation {
+            transition: background-color 0.4s ease, transform 0.4s ease;
+        }
+
+        .total-animation:hover {
+            background-color: #28a745; /* Highlight total on hover */
+            transform: scale(1.05);
+        }
+    </style>
+
+    <!-- JavaScript for Cart Update and Delete -->
+    <script>
+        // Update Cart
+        $(document).on('click', '.update-cart', function(e) {
+            e.preventDefault();
+            var productid = $(this).data('index');
+            $.ajax({
+                type: 'POST',
+                url: '{% url "cart_update" %}',
+                data: {
+                    product_id: productid,
+                    product_qty: $('#select' + productid + ' option:selected').text(),
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    action: 'post'
+                },
+                success: function(json) {
+                    location.reload();
+                },
+                error: function(xhr, errmsg, err) {
+                    console.error('Error: ' + errmsg);
+                }
+            });
+        });
+
+        // Delete Item From Cart
+        $(document).on('click', '.delete-product', function(e) {
+            e.preventDefault();
+            var productid = $(this).data('index');
+            $.ajax({
+                type: 'POST',
+                url: '{% url "cart_delete" %}',
+                data: {
+                    product_id: productid,
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    action: 'post'
+                },
+                success: function(json) {
+                    location.reload();
+                },
+                error: function(xhr, errmsg, err) {
+                    console.error('Error: ' + errmsg);
+                }
+            });
+        });
+    </script>
+{% endblock content %}

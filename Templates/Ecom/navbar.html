@@ -1,0 +1,135 @@
+{% load static %}
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <img src="{% static 'img/ThreeComp-Logo.png' %}" width="230" height="50" style="padding-right: 100px; margin-right: 100px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'base' %}"><i class="bi bi-house-door-fill"></i> Home</a></li>
+
+                {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdownProfile" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-circle"></i> Profile</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownProfile">
+                            <li><a class="dropdown-item" href="{% url 'update_user' %}">User Profile</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" href="{% url 'update_info' %}">User info</a></li>
+                        </ul>
+                    </li>
+                    
+                    {% if user.is_superuser %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownOrders" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-clipboard-data"></i> Orders</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownOrders">
+                                <li><a class="dropdown-item" href="{% url 'shipped_dash' %}">Shipped Orders</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" href="{% url 'not_shipped_dash' %}">UnShipped Orders</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                    
+                    <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+                
+                {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}"><i class="bi bi-box-arrow-in-right"></i> Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'register' %}"><i class="bi bi-person-plus"></i> Register</a></li>
+                {% endif %}
+                    
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownCategories" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-grid"></i> Categories</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownCategories">
+                        <li><a class="dropdown-item" href="{% url 'category_summary' %}"><i class="bi bi-box-seam"></i> All Products</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item" href="#"><i class="bi bi-laptop"></i> Materiele <i class="bi bi-caret-right-fill"></i> </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{% url 'category' 'Pc-Portable-Bureau' %}"><i class="bi bi-laptop"></i> PC-Portable</a></li>
+                                <li><a class="dropdown-item" href="{% url 'category' 'Filtres confidentialité 3M' %}"><i class="bi bi-shield-check"></i> 	Filtres confidentialité 3M</a></li>
+                                <li><a class="dropdown-item" href="{% url 'category' 'Ecran Interactif' %}"><i class="bi bi-aspect-ratio"></i> Ecran Interactif</a></li>
+                                <li><a class="dropdown-item" href="{% url 'category' 'Imprimante' %}"><i class="bi bi-printer"></i> Imprimante</a></li>
+                                <li><a class="dropdown-item" href="{% url 'category' 'Service-SECURITY' %}"><i class="bi bi-aspect-ratio-fill"></i> RFID</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item" href="#"><i class="bi bi-cpu"></i> Service <i class="bi bi-caret-right-fill"></i> </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{% url 'category' 'Sevice-DATA' %}"><i class="bi bi-database-check"></i> Data</a></li>
+                                <li><a class="dropdown-item" href="{% url 'category' 'Service-IA' %}"><i class="bi bi-robot"> </i>  IA</a></li>
+                                <li><a class="dropdown-item" href="{% url 'category' 'Service-SECURITY' %}"><i class="bi bi-shield-lock"></i> Cyber</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li class="nav-item"><a class="nav-link" href="{% url 'search' %}"><i class="bi bi-search"></i></a></li>
+            </ul>
+
+            <form class="d-flex">
+                <a href="{% url 'cart_summary' %}" class="btn btn-outline-dark">
+                    <i class="bi-cart-fill me-1"></i>
+                    Cart
+                    <span class="badge bg-dark text-white ms-1 rounded-pill" id="cart_quantity">{{ cart|length }}</span>
+                </a>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<!-- Custom JavaScript to handle dropdown-submenu -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var dropdowns = document.querySelectorAll('.dropdown-submenu .dropdown-item');
+        
+        dropdowns.forEach(function (dropdown) {
+            dropdown.addEventListener('click', function (e) {
+                e.stopPropagation();
+                var submenu = this.nextElementSibling;
+                
+                if (submenu) {
+                    // Toggle visibility of submenu
+                    submenu.classList.toggle('show');
+                    
+                    // Adjust submenu position to right of parent
+                    submenu.style.position = 'absolute';
+                    submenu.style.top = '0';
+                    submenu.style.left = '100%';  // Positioned to the right of the parent
+                    submenu.style.marginLeft = '0';
+                }
+            });
+        });
+
+        // Close submenu when clicking outside
+        document.addEventListener('click', function (e) {
+            dropdowns.forEach(function (dropdown) {
+                var submenu = dropdown.nextElementSibling;
+                if (submenu && !submenu.contains(e.target) && !dropdown.contains(e.target)) {
+                    submenu.classList.remove('show');
+                }
+            });
+        });
+    });
+</script>
+
+<!-- Add some custom CSS for submenu styling -->
+<style>
+    .dropdown-menu {
+        min-width: 200px; /* Adjust width as needed */
+    }
+    .dropdown-submenu {
+        position: relative;
+    }
+    .dropdown-submenu .dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-left: 0;
+        margin-top: -1px; /* Adjust to align with parent */
+    }
+    .dropdown-menu.show {
+        display: block;
+    }
+</style>

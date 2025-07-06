@@ -1,0 +1,218 @@
+{% extends 'Ecom/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <!-- Vérifiez si des produits sont présents dans le panier -->
+        {% if cart_products %}
+            {% for product in cart_products %}
+            <!-- Ajouter une ligne de séparation entre les produits -->
+            <div class="col-12 mb-4">
+                <hr class="my-4" style="border: 1px solid #dee2e6;">
+            </div>
+            <!-- Image du produit -->
+            <div class="col-md-5 mb-4">
+                <div class="card position-relative zoom-container">
+                    {% if product.is_sale %}
+                        <span class="badge bg-danger position-absolute top-0 start-0 m-2">En solde</span>
+                    {% endif %}
+                    <img id="main-image-{{ product.id }}" src="{{ product.image1.url }}" class="card-img-top img-fluid" alt="{{ product.name }}">
+                </div>
+
+                <!-- Miniatures des images -->
+                <div class="mt-3 d-flex justify-content-center">
+                    <img src="{{ product.image1.url }}" class="img-thumbnail mx-2 product-thumbnail" alt="Image 1" onclick="changeImage('{{ product.image1.url }}', {{ product.id }})">
+
+                    {% if product.image2 %}
+                        <img src="{{ product.image2.url }}" class="img-thumbnail mx-2 product-thumbnail" alt="Image 2" onclick="changeImage('{{ product.image2.url }}', {{ product.id }})">
+                    {% endif %}
+
+                    {% if product.image3 %}
+                        <img src="{{ product.image3.url }}" class="img-thumbnail mx-2 product-thumbnail" alt="Image 3" onclick="changeImage('{{ product.image3.url }}', {{ product.id }})">
+                    {% endif %}
+
+                    {% if product.image4 %}
+                        <img src="{{ product.image4.url }}" class="img-thumbnail mx-2 product-thumbnail" alt="Image 4" onclick="changeImage('{{ product.image4.url }}', {{ product.id }})">
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Détails du produit -->
+            <div class="col-md-7 fade-in">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">{{ product.name }}</h2>
+                        <p class="card-text text-muted">{{ product.description|safe }}</p>
+
+                        <!-- Prix du produit -->
+                        <div class="mb-3">
+                            {% if product.is_sale %}
+                                <span class="text-muted text-decoration-line-through">{{ product.price }} DH</span>
+                                <span class="h4 text-danger price-animation">{{ product.sale_price }} DH</span>
+                            {% else %}
+                                <span class="h4 price-animation">{{ product.price }} DH</span>
+                            {% endif %}
+                        </div>
+
+                        <!-- Quantité -->
+                        <div class="row mb-3">
+                            <label for="select{{ product.id }}" class="col-md-3 col-form-label">Quantité :</label>
+                            <div class="col-md-4">
+                                <select class="form-select" id="select{{ product.id }}">
+                                    {% for key, value in quantities.items %}
+                                        {% if key == product.id|slugify %}
+                                            <option selected>{{ value }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Boutons pour mettre à jour ou supprimer du panier -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="{% url 'base' %}" class="btn btn-secondary">Accueil</a>
+                            <div>
+                                <button type="button" value="{{ product.id }}" class="btn btn-secondary update-cart-btn" data-index="{{ product.id }}">Mettre à jour</button>
+                                <button type="button" value="{{ product.id }}" class="btn btn-danger delete-cart-btn" data-index="{{ product.id }}">Supprimer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            <!-- Total de la commande -->
+            <div class="col-12 mt-5">
+                <div class="card p-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="fw-bold">Total :</h4>
+                        <span class="h4 badge bg-success total-animation">{{ totals }} DH</span>
+                    </div>
+                    <div class="mt-3 d-flex justify-content-center">
+                        <a href="{% url 'checkout' %}" class="btn btn-success">Passer à la caisse</a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+        <br><br><br><br> 
+            <!-- Si le panier est vide -->
+            <div class="text-center">
+                <h2>Votre panier est vide...</h2>
+            </div>
+            <br><br><br><br><br><br><br><br><br><br><br>  
+        {% endif %}
+    </div>
+</div>
+
+<!-- CSS Animations et Styles -->
+<style>
+    .zoom-container {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .zoom-container img {
+        transition: transform 0.4s ease, filter 0.3s ease;
+        width: 100%;
+    }
+
+    .zoom-container:hover img {
+        transform: scale(1.2);
+        filter: brightness(1.1);
+    }
+
+    .fade-in {
+        opacity: 0;
+        animation: fadeIn 1s forwards;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .product-thumbnail {
+        width: 80px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+
+    .product-thumbnail:hover {
+        transform: scale(1.1);
+    }
+
+    .price-animation {
+        transition: color 0.4s ease, transform 0.4s ease;
+    }
+
+    .price-animation:hover {
+        color: #dc3545;
+        transform: scale(1.05);
+    }
+
+    .total-animation {
+        transition: transform 0.4s ease, background-color 0.3s ease;
+    }
+
+    .total-animation:hover {
+        background-color: #28a745;
+        transform: scale(1.05);
+    }
+</style>
+
+<!-- JavaScript pour changer les images et les actions du panier -->
+<script>
+    // Fonction pour changer l'image principale
+    function changeImage(imageUrl, productId) {
+        document.getElementById('main-image-' + productId).src = imageUrl;
+    }
+
+    // Mettre à jour le panier
+    $(document).on('click', '.update-cart-btn', function(e) {
+        e.preventDefault();
+        var productid = $(this).data('index');
+        $.ajax({
+            type: 'POST',
+            url: '{% url "cart_update" %}',
+            data: {
+                product_id: productid,
+                product_qty: $('#select' + productid + ' option:selected').text(),
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+            success: function(json) {
+                location.reload();
+            },
+            error: function(xhr, errmsg, err) {
+                console.error('Error: ' + errmsg);
+            }
+        });
+    });
+
+    // Supprimer un produit du panier
+    $(document).on('click', '.delete-cart-btn', function(e) {
+        e.preventDefault();
+        var productid = $(this).data('index');
+        $.ajax({
+            type: 'POST',
+            url: '{% url "cart_delete" %}',
+            data: {
+                product_id: productid,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+            success: function(json) {
+                location.reload();
+            },
+            error: function(xhr, errmsg, err) {
+                console.error('Error: ' + errmsg);
+            }
+        });
+    });
+</script>
+{% endblock content %}

@@ -1,0 +1,145 @@
+.
+├── APP_Web
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   ├── __init__.cpython-312.pyc
+│   │   ├── settings.cpython-312.pyc
+│   │   ├── urls.cpython-312.pyc
+│   │   └── wsgi.cpython-312.pyc
+│   ├── asgi.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── Ecommerce_Website
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   ├── __init__.cpython-312.pyc
+│   │   ├── admin.cpython-312.pyc
+│   │   ├── apps.cpython-312.pyc
+│   │   ├── forms.cpython-312.pyc
+│   │   ├── models.cpython-312.pyc
+│   │   ├── urls.cpython-312.pyc
+│   │   └── views.cpython-312.pyc
+│   ├── admin.py
+│   ├── apps.py
+│   ├── forms.py
+│   ├── migrations
+│   │   ├── 0001_initial.py
+│   │   ├── 0002_alter_produit_description.py
+│   │   ├── 0003_profile.py
+│   │   ├── 0004_profile_old_cart.py
+│   │   ├── 0005_alter_produit_description.py
+│   │   ├── 0006_alter_produit_description.py
+│   │   ├── 0007_alter_produit_price.py
+│   │   ├── __init__.py
+│   │   └── __pycache__
+│   │       ├── 0001_initial.cpython-312.pyc
+│   │       ├── 0002_alter_produit_description.cpython-312.pyc
+│   │       ├── 0003_profile.cpython-312.pyc
+│   │       ├── 0004_profile_old_cart.cpython-312.pyc
+│   │       ├── 0005_alter_produit_description.cpython-312.pyc
+│   │       ├── 0006_alter_produit_description.cpython-312.pyc
+│   │       ├── 0007_alter_produit_price.cpython-312.pyc
+│   │       └── __init__.cpython-312.pyc
+│   ├── models.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── README.md
+├── Templates
+│   ├── Ecom
+│   │   ├── base.html
+│   │   ├── category.html
+│   │   ├── category_summary.html
+│   │   ├── footer.html
+│   │   ├── index.html
+│   │   ├── login.html
+│   │   ├── navbar.html
+│   │   ├── product.html
+│   │   ├── register.html
+│   │   ├── search.html
+│   │   ├── update_info.html
+│   │   ├── update_password.html
+│   │   └── update_user.html
+│   └── home.html
+├── cart
+│   ├── Templates
+│   │   └── cart
+│   │       └── cart_summary.html
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   ├── __init__.cpython-312.pyc
+│   │   ├── admin.cpython-312.pyc
+│   │   ├── apps.cpython-312.pyc
+│   │   ├── cart.cpython-312.pyc
+│   │   ├── context_processors.cpython-312.pyc
+│   │   ├── models.cpython-312.pyc
+│   │   ├── urls.cpython-312.pyc
+│   │   └── views.cpython-312.pyc
+│   ├── admin.py
+│   ├── apps.py
+│   ├── cart.py
+│   ├── context_processors.py
+│   ├── migrations
+│   │   ├── __init__.py
+│   │   └── __pycache__
+│   │       └── __init__.cpython-312.pyc
+│   ├── models.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── db.sqlite3
+├── manage.py
+├── media
+│   └── produit
+│       ├
+├── payment
+│   ├── Templates
+│   │   └── payment
+│   │       ├── billing_info.html
+│   │       ├── checkout.html
+│   │       ├── not_shipped_dash.html
+│   │       ├── orders.html
+│   │       ├── payment_failed.html
+│   │       ├── payment_success.html
+│   │       ├── process_order.html
+│   │       └── shipped_dash.html
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   ├── __init__.cpython-312.pyc
+│   │   ├── admin.cpython-312.pyc
+│   │   ├── apps.cpython-312.pyc
+│   │   ├── forms.cpython-312.pyc
+│   │   ├── models.cpython-312.pyc
+│   │   ├── urls.cpython-312.pyc
+│   │   └── views.cpython-312.pyc
+│   ├── admin.py
+│   ├── apps.py
+│   ├── forms.py
+│   ├── migrations
+│   │   ├── 0001_initial.py
+│   │   ├── 0002_rename_address1_shippingaddress_shipping_address1_and_more.py
+│   │   ├── 0003_alter_shippingaddress_shipping_address2_order_and_more.py
+│   │   ├── 0004_order_shipped.py
+│   │   ├── 0005_order_date_shipped.py
+│   │   ├── __init__.py
+│   │   └── __pycache__
+│   │       ├── 0001_initial.cpython-312.pyc
+│   │       ├── 0002_rename_address1_shippingaddress_shipping_address1_and_more.cpython-312.pyc
+│   │       ├── 0003_alter_shippingaddress_shipping_address2_order_and_more.cpython-312.pyc
+│   │       ├── 0004_order_shipped.cpython-312.pyc
+│   │       ├── 0005_order_date_shipped.cpython-312.pyc
+│   │       └── __init__.cpython-312.pyc
+│   ├── models.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── procfile
+├── requirements.txt
+├── runtime.txt
+├── static
+
+│      
+└── tree.txt
+
+154 directories, 940 files

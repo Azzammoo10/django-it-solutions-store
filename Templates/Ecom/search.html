@@ -1,0 +1,89 @@
+{% extends 'Ecom/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Inclure Bootstrap CSS -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Section d'en-tête -->
+<header class="bg-dark text-white text-center py-5">
+    <h1 class="display-4">Rechercher un Produit</h1>
+    <p class="lead">Trouvez ce que vous cherchez...</p>
+</header>
+
+<!-- Section de la barre de recherche -->
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form method="POST" action="{% url 'search' %}" class="d-flex">
+                {% csrf_token %}
+                <input type="text" class="form-control me-2" placeholder="Rechercher des produits" name="searched">
+                <button type="submit" class="btn btn-primary">Rechercher</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Section des cartes produits -->
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% if searched %}
+            {% for p in searched %}
+            <div class="col mb-4">
+                <div class="card h-100 product-card">
+                    <!-- Badge pour indiquer la disponibilité du produit -->
+                    {% if p.dispo == 'REP' %}
+                        <div class="badge bg-dark text-white position-absolute" style="top: 1rem; right: 1rem">Rupture de Stock</div>
+                    {% elif p.dispo == 'SALE' %}
+                        <div class="badge bg-danger text-white position-absolute" style="top: 1rem; right: 1rem">SALE</div>
+                    {% endif %}
+                    <!-- Image du produit -->
+                    <img src="{{ p.image1.url }}" class="card-img-top" alt="Image du produit">
+                    <!-- Détails du produit -->
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{ p.name }}</h5>
+                        <div class="d-flex justify-content-center small text-warning mb-2">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                        <!-- Prix du produit -->
+                        <p class="card-text">
+                            {% if p.is_sale %}
+                                <span class="text-muted text-decoration-line-through">{{ p.price }} DH</span> {{ p.sale_price }} DH
+                            {% else %}
+                                {{ p.price }} DH
+                            {% endif %}
+                        </p>
+                        <p class="card-text">Dans : {{ p.categorie }}</p>
+                    </div>
+                    <!-- Bouton Voir les options -->
+                    <div class="card-footer text-center">
+                        <a href="{% url 'product' p.id %}" class="btn btn-primary">Voir les options</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+<!-- JavaScript pour les animations -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const cards = document.querySelectorAll('.product-card');
+        cards.forEach((card, index) => {
+            setTimeout(() => {
+                card.style.opacity = 1;
+                card.style.transform = 'translateY(0)';
+                card.classList.add('animate__animated', 'animate__fadeInUp');
+            }, index * 100);
+        });
+    });
+</script>
+<br><br><br><br><br>
+{% endblock content %}
