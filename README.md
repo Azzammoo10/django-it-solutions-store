@@ -104,6 +104,7 @@ git --version
 # Cloner le repository
 git clone https://github.com/votre-username/ecommerce-django.git
 cd ecommerce-django
+code .
 ```
 
 ### Configuration de l'environnement virtuel
@@ -188,33 +189,45 @@ PAYPAL_RECEIVER_EMAIL=business@threecomp.com
 
 ## 📱 Captures d'écran
 
-### 🏠 Page d'accueil
-<!-- Ajoutez ici une capture d'écran de la page d'accueil -->
-**Titre : Page d'accueil - Présentation des produits vedettes**
+## 📸 Aperçu du Projet – ThreeComp SECURITY
 
-### 🛍️ Catalogue de produits
-<!-- Ajoutez ici une capture d'écran du catalogue -->
-**Titre : Catalogue - Navigation par catégories**
+Ce projet est une plateforme e-commerce spécialisée dans les solutions de sécurité informatique et matérielle, développée avec Django.
 
-### 📦 Page produit détaillée
-<!-- Ajoutez ici une capture d'écran d'un produit -->
-**Titre : Détail produit - Images multiples et informations complètes**
+---
 
-### 🛒 Panier d'achat
-<!-- Ajoutez ici une capture d'écran du panier -->
-**Titre : Panier - Gestion des quantités et calcul des totaux**
+### 🏠 Page d'accueil – ThreeComp SECURITY
 
-### 💳 Processus de paiement
-<!-- Ajoutez ici une capture d'écran du checkout -->
-**Titre : Checkout - Intégration PayPal sécurisée**
+![Accueil](./assets/acceuil.png)
 
-### 👤 Espace utilisateur
-<!-- Ajoutez ici une capture d'écran du profil utilisateur -->
-**Titre : Profil utilisateur - Gestion des informations personnelles**
+> Page principale de présentation du groupe ThreeComp, avec un message de bienvenue et un accès rapide au matériel disponible.
 
-### 🔧 Interface d'administration
-<!-- Ajoutez ici une capture d'écran de l'admin -->
-**Titre : Dashboard admin - Gestion complète de la plateforme**
+---
+
+### 💡 Nos Solutions – Optimisez votre stratégie numérique
+
+![Nos Solutions](./assets/Nos_Solution.png)
+
+> Cette section met en avant les solutions proposées par l’entreprise : cybersécurité, IA et Data Science.
+
+---
+
+### 🛒 Page Boutique – Produits disponibles
+
+![Page Commerce](./assets/page_Commece.png)
+
+> Présentation dynamique des différents produits proposés, comme des PC portables, caméras de surveillance, écrans interactifs, etc.
+
+---
+
+### 🔍 Détail Produit – CCTV Camera
+
+![Détail Produit](./assets/Product.png)
+
+> Page de détail pour un produit spécifique (CCTV Camera), incluant description, spécifications techniques, prix et ajout au panier.
+
+---
+
+
 
 ## 🏗️ Architecture
 
@@ -255,33 +268,6 @@ ecommerce-django/
 - **OrderItem** : Articles de commande
 - **ShippingAddress** : Adresses de livraison
 
-## 🔧 API Endpoints
-
-### Pages principales
-- `GET /` : Page d'accueil
-- `GET /base/` : Page e-commerce principale
-- `GET /materiel/` : Catalogue de produits
-- `GET /category/<str>/` : Produits par catégorie
-- `GET /product/<int>/` : Détail d'un produit
-
-### Authentification
-- `GET /login/` : Page de connexion
-- `POST /login/` : Authentification
-- `GET /register/` : Page d'inscription
-- `POST /register/` : Création de compte
-- `GET /logout/` : Déconnexion
-
-### Gestion du profil
-- `GET /update_user/` : Modification du profil
-- `GET /update_password/` : Changement de mot de passe
-- `GET /update_info/` : Mise à jour des informations
-
-### Panier et commandes
-- `GET /cart/` : Affichage du panier
-- `POST /cart/add/` : Ajouter au panier
-- `POST /cart/update/` : Modifier le panier
-- `POST /cart/delete/` : Supprimer du panier
-- `GET /payment/checkout/` : Processus de paiement
 
 ## 📊 Base de données
 
@@ -349,26 +335,6 @@ python manage.py migrate
 python manage.py createsuperuser
 ```
 
-### Configuration de production
-- **DEBUG=False** : Mode production
-- **ALLOWED_HOSTS** : Domaines autorisés
-- **STATIC_ROOT** : Chemin des fichiers statiques
-- **MEDIA_ROOT** : Chemin des fichiers uploadés
-
-## 🤝 Contribution
-
-### Comment contribuer
-1. **Fork** le projet
-2. **Créer** une branche feature (`git checkout -b feature/AmazingFeature`)
-3. **Commit** les changements (`git commit -m 'Add AmazingFeature'`)
-4. **Push** vers la branche (`git push origin feature/AmazingFeature`)
-5. **Ouvrir** une Pull Request
-
-### Standards de code
-- **PEP 8** : Style de code Python
-- **Docstrings** : Documentation des fonctions
-- **Tests** : Couverture de tests
-- **Type hints** : Annotations de types
 
 ## 📄 Licence
 
@@ -379,10 +345,9 @@ Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 ## 📞 Contact
 
 **ThreeComp Company**
-- **Email** : business@threecomp.com
-- **Site web** : https://threecomp.com
-- **GitHub** : [Lien vers le repository]
+- **Email** : [azzam.moo@gmail.com](mailto:azzam.moo@gmail.com)
+- **GitHub** : [@azzammoo10](https://github.com/azzammoo10)
 
 ---
 
-**Développé avec ❤️ par l'équipe ThreeComp**
+**Développé avec ❤️ par AZZAM Mohamed **
